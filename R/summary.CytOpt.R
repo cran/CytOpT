@@ -17,7 +17,7 @@
 #'              Lab_source = HIPC_Stanford_1228_1A_labels,
 #'              eps = 0.0001, lbd = 0.0001, n_iter = 10000, n_stoc=10,
 #'              step_grad = 10, step = 5, power = 0.99, 
-#'              method='minmax')
+#'              method='minmax', monitoring=TRUE)
 #'summary(res)
 #'
 #'}
@@ -26,9 +26,10 @@
 summary.CytOpt <- function(object, ...){
   s <- list()
   s[["proportions"]] <- object$proportions
-  
+
   if(!is.null(s$proportions$Gold_standard)){
     s[["KLdiv"]] <- lapply(object$monitoring, function(x){x[length(x)]})
+    s[["n_iter"]] <- lapply(object$monitoring, function(x){length(x)})
   }else{
     s[["KLdiv"]] <- NULL
   }
@@ -58,16 +59,23 @@ print.summary.CytOpt <- function(x, ...){
     method <- method[-1]
   }
   
-  cat("Estimation of cell proportions with", paste0(method, collapse = " and "), " from CytOpt:\n")
+  cat("Estimation of cell proportions with", paste0(method, collapse = " and "), "from CytOpt:\n")
   
   print(x$proportions)
   
-  if(!is.null(x$KLdiv)){
+  if(length(x$KLdiv)>0){
     KLdivs <- unlist(x$KLdiv)
     names(KLdivs) <- gsub("MinMax", "MinMax swapping", 
                           gsub("Descent_ascent", "Descent-Ascent", names(KLdivs)
                           ))
     cat("\nFinal Kullback-Leibler divergences:\n")
     print(KLdivs)
+    
+    niter <- unlist(x$n_iter)
+    names(niter) <- gsub("MinMax", "MinMax swapping", 
+                          gsub("Descent_ascent", "Descent-Ascent", names(niter)
+                          ))
+    cat("Number of iterations:\n")
+    print(unlist(niter))
   }
 }

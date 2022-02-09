@@ -2,6 +2,7 @@
 title: "User guide for executing `CytOpT` on `HIPC` data"
 author: "Paul Freulon, Jérémie Bigot, Kalidou BA, Boris Hejblum"
 date: "`r Sys.Date()`"
+logo: "man/figures/logo.png"
 output:
   rmarkdown::html_vignette:
     toc: yes
@@ -75,7 +76,7 @@ set.seed(123)
 res <- CytOpT(X_s = HIPC_Stanford_1228_1A, X_t = HIPC_Stanford_1369_1A, 
               Lab_source = HIPC_Stanford_1228_1A_labels,
               theta_true = gold_standard_manual_prop,
-              method='both')
+              method='both', monitoring = TRUE)
 ```
 
 
@@ -87,7 +88,7 @@ summary(res)
 ```
 
 Some visualizations are provided by the `plot()` method:
-```{r, fig.width = 7, fig.asp = .8}
+```{r, fig.width = 7, fig.asp = .8, fig.retina=2}
 plot(res)
 ```
 
@@ -96,9 +97,11 @@ plot(res)
 Concordance between the manual gating gold-standard and `CytOpt` estimation can 
 be graphically diagnosed with Bland-Altman plots:
 
-```{r BA, fig.width = 7, fig.asp = .8}
+```{r BA, fig.width = 7, fig.asp = .6, fig.retina = 2}
 Bland_Altman(res$proportions)
 ```
+
+----
 
 The methods implemented in the `CytOpt` package are detailed in the following article:
 

@@ -28,14 +28,14 @@ set.seed(123)
 res <- CytOpT(X_s = HIPC_Stanford_1228_1A, X_t = HIPC_Stanford_1369_1A, 
               Lab_source = HIPC_Stanford_1228_1A_labels,
               theta_true = gold_standard_manual_prop,
-              method='both')
+              method='both', monitoring = TRUE)
 
 ## -----------------------------------------------------------------------------
 summary(res)
 
-## ---- fig.width = 7, fig.asp = .8---------------------------------------------
+## ---- fig.width = 7, fig.asp = .8, fig.retina=2-------------------------------
 plot(res)
 
-## ----BA, fig.width = 7, fig.asp = .8------------------------------------------
+## ----BA, fig.width = 7, fig.asp = .6, fig.retina = 2--------------------------
 Bland_Altman(res$proportions)
 
