@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/sistm/CytOpt-R/workflows/R-CMD-check/badge.svg)](https://github.com/sistm/CytOpt-R/actions)
+[![R-CMD-check](https://github.com/sistm/CytOpT-R/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sistm/CytOpT-R/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/sistm/CytOpT-R/branch/main/graph/badge.svg)](https://app.codecov.io/gh/sistm/CytOpT-R?branch=main)
 [![CRAN
@@ -33,7 +33,9 @@ The methods implemented in this package are detailed in the following
 article:
 
 > Paul Freulon, Jérémie Bigot, Boris P. Hejblum. CytOpT: Optimal
-> Transport with Domain Adaptation for Interpreting Flow Cytometry data
+> Transport with Domain Adaptation for Interpreting Flow Cytometry data.
+> *Annals of Applied Statistics*, *17*(2), 1086-1104.
+> <doi:10.1214/22-AOAS1660> <https://doi.org/10.1214/22-AOAS1660>
 > <https://arxiv.org/abs/2006.09003>
 
 ## Installation
@@ -82,30 +84,32 @@ res <- CytOpT(X_s = HIPC_Stanford_1228_1A, X_t = HIPC_Stanford_1369_1A,
               eps = 0.0001, lbd = 0.0001, n_iter = 10000, n_stoc=10,
               step_grad = 10, step = 5, power = 0.99, 
               method='both', monitoring=TRUE)
+#> Converting `X_s` from data.frame to matrix type
+#> Converting `X_t` from data.frame to matrix type
 #> Running Descent-ascent optimization...
-#> Done in 1.1 mins
+#> Done in 41 secs
 #> Running MinMax optimization...
-#> Done in 15.3 secs
+#> Done in 13.1 secs
 ```
 
 ``` r
 summary(res)
 #> Estimation of cell proportions with Descent-Ascent and MinMax swapping from CytOpt:
 #>                     Gold_standard Descent_ascent      MinMax
-#> CD8 Effector          0.017004001    0.051811765 0.044949922
-#> CD8 Naive             0.128736173    0.088553804 0.101069760
-#> CD8 Central Memory    0.048481996    0.036842527 0.036233461
-#> CD8 Effector Memory   0.057484114    0.062380003 0.070825666
-#> CD8 Activated         0.009090374    0.017439071 0.005579535
-#> CD4 Effector          0.002324076    0.007844185 0.007394887
-#> CD4 Naive             0.331460344    0.360283016 0.332733654
-#> CD4 Central Memory    0.281713344    0.203949350 0.204808587
-#> CD4 Effector Memory   0.102082843    0.156117274 0.169102276
-#> CD4 Activated         0.021622735    0.014779005 0.027302251
+#> CD8 Effector          0.017004001    0.053759778 0.047393221
+#> CD8 Naive             0.128736173    0.088769005 0.107816158
+#> CD8 Central Memory    0.048481996    0.038397834 0.033566658
+#> CD8 Effector Memory   0.057484114    0.063361303 0.065816317
+#> CD8 Activated         0.009090374    0.018372778 0.009994826
+#> CD4 Effector          0.002324076    0.008558555 0.004906936
+#> CD4 Naive             0.331460344    0.342921952 0.342097994
+#> CD4 Central Memory    0.281713344    0.214043702 0.194972841
+#> CD4 Effector Memory   0.102082843    0.157122353 0.185355840
+#> CD4 Activated         0.021622735    0.014692740 0.008079209
 #> 
 #> Final Kullback-Leibler divergences:
 #>  Descent-Ascent MinMax swapping 
-#>      0.06534157      0.05700472 
+#>      0.06512061      0.07230307 
 #> Number of iterations:
 #>  Descent-Ascent MinMax swapping 
 #>            5000           10000

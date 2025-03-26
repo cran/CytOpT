@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
   eval = eval
 )
 
-## ---- eval=TRUE---------------------------------------------------------------
+## ----eval=TRUE----------------------------------------------------------------
 library(CytOpT)
 data("HIPC_Stanford")
 
@@ -33,7 +33,7 @@ res <- CytOpT(X_s = HIPC_Stanford_1228_1A, X_t = HIPC_Stanford_1369_1A,
 ## -----------------------------------------------------------------------------
 summary(res)
 
-## ---- fig.width = 7, fig.asp = .8, fig.retina=2-------------------------------
+## ----fig.width = 7, fig.asp = .8, fig.retina=2--------------------------------
 plot(res)
 
 ## ----BA, fig.width = 7, fig.asp = .6, fig.retina = 2--------------------------

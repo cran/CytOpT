@@ -2,8 +2,8 @@ Package: CytOpT
 Type: Package
 Title: Optimal Transport for Gating Transfer in Cytometry Data with
         Domain Adaptation
-Version: 0.9.4
-Date: 2022-02-08
+Version: 0.9.6
+Date: 2025-03-26
 Authors@R: c(person("Boris", "Hejblum", role = c("aut", "cre"), email = "boris.hejblum@u-bordeaux.fr"),
               person("Paul", "Freulon", role = c("aut"), email = "paul.freulon@math.u-bordeaux.fr"),
               person("Kalidou", "Ba", role = c("aut", "trl")))
@@ -16,7 +16,7 @@ Description: Supervised learning from a source distribution (with known segmenta
              different samples, thus accounting for possible mis-alignment of a given cell population across sample 
              (due to technical variability from the technology of measurements). Supervised learning technique based 
              on the Wasserstein metric that is used to estimate an optimal re-weighting of class proportions in a 
-             mixture model Details are presented in Freulon P, Bigot J and Hejblum BP (2021) <arXiv:2006.09003>.
+             mixture model Details are presented in Freulon P, Bigot J and Hejblum BP (2023) <doi:10.1214/22-AOAS1660>.
 Config/reticulate: list( packages = list( list(package = "numpy"),
         list(package = "scikit-learn"), list(package = "scipy") ) )
 License: GPL (>= 2)
@@ -25,7 +25,7 @@ URL: https://sistm.github.io/CytOpT-R/,
         https://github.com/sistm/CytOpT-R/
 Depends: R (>= 3.6)
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 Encoding: UTF-8
 Imports: ggplot2 (>= 3.0.0), MetBrewer, patchwork, reshape2,
         reticulate, stats, testthat (>= 3.0.0)
@@ -34,8 +34,8 @@ Config/testthat/edition: 3
 VignetteBuilder: knitr
 Language: en-US
 NeedsCompilation: no
-Packaged: 2022-02-09 16:32:16 UTC; boris
+Packaged: 2025-03-26 09:36:49 UTC; boris
 Author: Boris Hejblum [aut, cre],
   Paul Freulon [aut],
   Kalidou Ba [aut, trl]
-Date/Publication: 2022-02-09 17:10:06 UTC
+Date/Publication: 2025-03-26 10:00:02 UTC
