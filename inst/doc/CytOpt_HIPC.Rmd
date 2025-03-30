@@ -12,11 +12,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r knitrsetup, include = FALSE}
-
+```{r knitrsetup, include = FALSE, eval=TRUE}
 library(reticulate)
 # this vignette requires python 3.7 or newer to run
-eval <- tryCatch({
+eval_is <- tryCatch({
   numeric_version(py_config()$version) >= "3.7" && py_numpy_available() && 
     py_module_available("scipy") && py_module_available("sklearn")
 }, error = function(e) FALSE)
@@ -24,7 +23,7 @@ eval <- tryCatch({
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  eval = eval
+  eval = eval_is
 )
 ```
 
@@ -46,13 +45,13 @@ Above, `xx` denotes the center where the data analysis was performed, and `y` de
 
 ## Data load
 
-```{r, eval=TRUE}
+```{r pkg and data loading, eval=TRUE}
 library(CytOpT)
 data("HIPC_Stanford")
 ```
 
 Here are the first few lines of the flow-cytometry measurements from patient *1228* replicate *1A*:
-```{r}
+```{r Stanford_1228_1A_head, echo=FALSE}
 knitr::kable(head(HIPC_Stanford_1228_1A))
 ```
 The manual clustering of these data into 10 cell populations (`r paste0(levels(HIPC_Stanford_1228_1A_labels), collapse=", ")`) can be accessed from the `HIPC_Stanford_1228_1A_labels` object.
@@ -62,8 +61,9 @@ We will use the manual gating from patient *1228* replicate *1A* as our source p
 ## Computation of the benchmark class proportions for target data
 
 Because in this example, we know the true proportions in the target data set `HIPC_Stanford_1369_1A`, we can assess the gap between the estimate form `CytOpt` and the cellular proportions from the reference manual gating. For this purpose, we compute those manual proportions with:
-```{r}
-gold_standard_manual_prop <- c(table(HIPC_Stanford_1369_1A_labels)/length(HIPC_Stanford_1369_1A_labels))
+```{r goldstandard}
+gold_standard_manual_prop <- c(table(HIPC_Stanford_1369_1A_labels) /
+                                 length(HIPC_Stanford_1369_1A_labels))
 ```
 
 ## `CytOpT`
@@ -71,7 +71,7 @@ gold_standard_manual_prop <- c(table(HIPC_Stanford_1369_1A_labels)/length(HIPC_S
 
 ### Optimization
 
-```{r}
+```{r optimization}
 set.seed(123)
 res <- CytOpT(X_s = HIPC_Stanford_1228_1A, X_t = HIPC_Stanford_1369_1A, 
               Lab_source = HIPC_Stanford_1228_1A_labels,
@@ -83,12 +83,12 @@ res <- CytOpT(X_s = HIPC_Stanford_1228_1A, X_t = HIPC_Stanford_1369_1A,
 ### Results
 
 The results from `CytOpt` for both optimization algorithms are:
-```{r}
+```{r results}
 summary(res)
 ```
 
 Some visualizations are provided by the `plot()` method:
-```{r, fig.width = 7, fig.asp = .8, fig.retina=2}
+```{r plots, fig.width = 7, fig.asp = .8, fig.retina=2}
 plot(res)
 ```
 

@@ -1,8 +1,7 @@
-## ----knitrsetup, include = FALSE----------------------------------------------
-
+## ----knitrsetup, include = FALSE, eval=TRUE-----------------------------------
 library(reticulate)
 # this vignette requires python 3.7 or newer to run
-eval <- tryCatch({
+eval_is <- tryCatch({
   numeric_version(py_config()$version) >= "3.7" && py_numpy_available() && 
     py_module_available("scipy") && py_module_available("sklearn")
 }, error = function(e) FALSE)
@@ -10,30 +9,31 @@ eval <- tryCatch({
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  eval = eval
+  eval = eval_is
 )
 
-## ----eval=TRUE----------------------------------------------------------------
+## ----pkg and data loading, eval=TRUE------------------------------------------
 library(CytOpT)
 data("HIPC_Stanford")
 
-## -----------------------------------------------------------------------------
+## ----Stanford_1228_1A_head, echo=FALSE----------------------------------------
 knitr::kable(head(HIPC_Stanford_1228_1A))
 
-## -----------------------------------------------------------------------------
-gold_standard_manual_prop <- c(table(HIPC_Stanford_1369_1A_labels)/length(HIPC_Stanford_1369_1A_labels))
+## ----goldstandard-------------------------------------------------------------
+gold_standard_manual_prop <- c(table(HIPC_Stanford_1369_1A_labels) /
+                                 length(HIPC_Stanford_1369_1A_labels))
 
-## -----------------------------------------------------------------------------
+## ----optimization-------------------------------------------------------------
 set.seed(123)
 res <- CytOpT(X_s = HIPC_Stanford_1228_1A, X_t = HIPC_Stanford_1369_1A, 
               Lab_source = HIPC_Stanford_1228_1A_labels,
               theta_true = gold_standard_manual_prop,
               method='both', monitoring = TRUE)
 
-## -----------------------------------------------------------------------------
+## ----results------------------------------------------------------------------
 summary(res)
 
-## ----fig.width = 7, fig.asp = .8, fig.retina=2--------------------------------
+## ----plots, fig.width = 7, fig.asp = .8, fig.retina=2-------------------------
 plot(res)
 
 ## ----BA, fig.width = 7, fig.asp = .6, fig.retina = 2--------------------------
