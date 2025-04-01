@@ -1,4 +1,12 @@
 ## ----knitrsetup, include = FALSE, eval=TRUE-----------------------------------
+# Set environment variables to limit thread usage while building the vignette
+Sys.setenv(
+        OMP_NUM_THREADS = "1",
+        MKL_NUM_THREADS = "1",
+        OPENBLAS_NUM_THREADS = "1",
+        VECLIB_MAXIMUM_THREADS = "1"
+      )
+
 library(reticulate)
 # this vignette requires python 3.7 or newer to run
 eval_is <- tryCatch({
@@ -24,11 +32,12 @@ gold_standard_manual_prop <- c(table(HIPC_Stanford_1369_1A_labels) /
                                  length(HIPC_Stanford_1369_1A_labels))
 
 ## ----optimization-------------------------------------------------------------
+
 set.seed(123)
 res <- CytOpT(X_s = HIPC_Stanford_1228_1A, X_t = HIPC_Stanford_1369_1A, 
               Lab_source = HIPC_Stanford_1228_1A_labels,
               theta_true = gold_standard_manual_prop,
-              method='both', monitoring = TRUE)
+              method="minmax", monitoring = TRUE)
 
 ## ----results------------------------------------------------------------------
 summary(res)
